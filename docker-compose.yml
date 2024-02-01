@@ -1,0 +1,21 @@
+services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "7000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 234
+    healthcheck:
+      test: "mysql $$MYSQL_DATABASE -u$$MYSQL_USER -p$$MYSQL_PASSWORD -e 'SELECT 1;'"
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    command: --ft_stopword_file="" --ngram_token_size=1
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 2G
